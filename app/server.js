@@ -164,8 +164,9 @@ const html = `<!DOCTYPE html>
     const outputBox = document.getElementById('output-box');
 
     helloBtn.addEventListener('click', () => {
-      // For now this is purely frontend. If you have a backend,
-      // you can replace this with a fetch('http://your-backend/...').
+    //BACKEND GOES HERE
+
+    
       outputBox.textContent = 'Hello from the frontend running in your Node.js server!';
     });
 
