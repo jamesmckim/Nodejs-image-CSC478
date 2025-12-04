@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Kubernetes Node.js App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a237e 0%, #311b92 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+            max-width: 1000px;
+            background-color: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .login-form-section {
+            flex: 1;
+            padding: 50px 40px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .welcome-section {
+            flex: 1;
+            background: linear-gradient(to bottom right, #3949ab, #5c6bc0);
+            color: white;
+            padding: 50px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-icon {
+            background-color: #3949ab;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-right: 15px;
+        }
+
+        .logo-text {
+            font-size: 26px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 32px;
+        }
+
+        .subtitle {
+            color: #777;
+            margin-bottom: 40px;
+            font-size: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 600;
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-with-icon i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #777;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #3949ab;
+            box-shadow: 0 0 0 2px rgba(57, 73, 171, 0.2);
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+        }
+
+        .remember-me input {
+            width: auto;
+            margin-right: 8px;
+        }
+
+        .forgot-password {
+            color: #3949ab;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        .login-button {
+            background-color: #3949ab;
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+            margin-bottom: 25px;
+        }
+
+        .login-button:hover {
+            background-color: #303f9f;
+        }
+
+        .login-button:disabled {
+            background-color: #8a8a8a;
+            cursor: not-allowed;
+        }
+
+        .divider {
+            text-align: center;
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .divider:before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background-color: #ddd;
+        }
+
+        .divider span {
+            background-color: white;
+            padding: 0 15px;
+            color: #777;
+            position: relative;
+        }
+
+        .social-login {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .social-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .google {
+            background-color: #db4437;
+        }
+
+        .github {
+            background-color: #333;
+        }
+
+        .microsoft {
+            background-color: #00a4ef;
+        }
+
+        .signup-link {
+            text-align: center;
+            color: #777;
+        }
+
+        .signup-link a {
+            color: #3949ab;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+
+        .welcome-section h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .welcome-section p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .kubernetes-logo {
+            font-size: 70px;
+            margin-bottom: 20px;
+        }
+
+        .features {
+            text-align: left;
+            margin-top: 30px;
+        }
+
+        .features li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .features i {
+            margin-right: 10px;
+            color: #c5cae9;
+        }
+
+        .error-message {
+            color: #e53935;
+            background-color: #ffebee;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .success-message {
+            color: #2e7d32;
+            background-color: #e8f5e9;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .welcome-section {
+                order: -1;
+                padding: 30px 20px;
+            }
+            
+            .login-form-section {
+                padding: 40px 30px;
+            }
+            
+            .kubernetes-logo {
+                font-size: 50px;
+            }
+        }
+
+        .pod-info {
+            background-color: #f5f5f5;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 30px;
+            font-size: 14px;
+            border-left: 4px solid #3949ab;
+        }
+
+        .pod-info h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .pod-info p {
+            margin-bottom: 8px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="login-form-section">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <div class="logo-text">K8S Auth</div>
+            </div>
+            
+            <h1>Welcome Back</h1>
+            <p class="subtitle">Sign in to your account to continue</p>
+            
+            <div id="errorMessage" class="error-message"></div>
+            <div id="successMessage" class="success-message"></div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Username or Email</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="username" name="username" placeholder="Enter your username or email" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-key"></i>
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                    </div>
+                </div>
+                
+                <div class="options">
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember" name="remember">
+                        <label for="remember">Remember me</label>
+                    </div>
+                    <a href="#" class="forgot-password">Forgot password?</a>
+                </div>
+                
+                <button type="submit" class="login-button" id="loginButton">
+                    <span id="buttonText">Sign In</span>
+                </button>
+            </form>
+            
+            <div class="divider">
+                <span>Or continue with</span>
+            </div>
+            
+            <div class="social-login">
+                <div class="social-btn google">
+                    <i class="fab fa-google"></i>
+                </div>
+                <div class="social-btn github">
+                    <i class="fab fa-github"></i>
+                </div>
+                <div class="social-btn microsoft">
+                    <i class="fab fa-microsoft"></i>
+                </div>
+            </div>
+            
+            <div class="signup-link">
+                Don't have an account? <a href="#">Sign up here</a>
+            </div>
+            
+            <div class="pod-info">
+                <h3>Kubernetes Pod Information</h3>
+                <p>Running on Node.js inside a Kubernetes pod</p>
+                <p>Hostname: <span id="hostname">Loading...</span></p>
+                <p>Environment: <span id="environment">Production</span></p>
+            </div>
+        </div>
+        
+        <div class="welcome-section">
+            <div class="kubernetes-logo">
+                <i class="fab fa-docker"></i>
+            </div>
+            <h2>Kubernetes Node.js App</h2>
+            <p>This login page is served from a Node.js application running inside a Kubernetes pod. The frontend communicates with a backend API to authenticate users.</p>
+            
+            <div class="features">
+                <h3>Features:</h3>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> Secure authentication</li>
+                    <li><i class="fas fa-check-circle"></i> Kubernetes pod deployment</li>
+                    <li><i class="fas fa-check-circle"></i> Scalable architecture</li>
+                    <li><i class="fas fa-check-circle"></i> Containerized application</li>
+                    <li><i class="fas fa-check-circle"></i> Health monitoring</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('loginForm');
+            const loginButton = document.getElementById('loginButton');
+            const buttonText = document.getElementById('buttonText');
+            const errorMessage = document.getElementById('errorMessage');
+            const successMessage = document.getElementById('successMessage');
+            const hostnameElement = document.getElementById('hostname');
+            
+            // Set hostname (simulating Kubernetes pod hostname)
+            hostnameElement.textContent = window.location.hostname || 'k8s-pod-' + Math.floor(Math.random() * 1000);
+            
+            // Form submission handler
+            loginForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                
+                // Clear previous messages
+                errorMessage.style.display = 'none';
+                successMessage.style.display = 'none';
+                
+                // Validate inputs
+                if (!username || !password) {
+                    showError('Please fill in all fields');
+                    return;
+                }
+                
+                // Disable button and show loading
+                loginButton.disabled = true;
+                buttonText.innerHTML = '<div class="loading"></div> Authenticating...';
+                
+                // Simulate API call to Node.js backend
+                try {
+                    // In a real implementation, this would be a fetch to your Node.js backend
+                    // Example: const response = await fetch('/api/login', { method: 'POST', body: JSON.stringify({username, password}) });
+                    
+                    // Simulate API delay
+                    await new Promise(resolve => setTimeout(resolve, 1500));
+                    
+                    // Mock authentication logic
+                    if (username === 'admin' && password === 'password') {
+                        // Successful login
+                        showSuccess('Login successful! Redirecting to dashboard...');
+                        
+                        // Simulate redirect after successful login
+                        setTimeout(() => {
+                            window.location.href = '/dashboard';
+                        }, 1000);
+                    } else {
+                        // Failed login
+                        showError('Invalid credentials. Try "admin" / "password"');
+                        loginButton.disabled = false;
+                        buttonText.textContent = 'Sign In';
+                    }
+                } catch (error) {
+                    showError('Connection error. Please try again.');
+                    loginButton.disabled = false;
+                    buttonText.textContent = 'Sign In';
+                }
+            });
+            
+            // Social login buttons
+            document.querySelectorAll('.social-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const provider = this.classList.contains('google') ? 'Google' : 
+                                   this.classList.contains('github') ? 'GitHub' : 'Microsoft';
+                    showSuccess(`Redirecting to ${provider} authentication...`);
+                });
+            });
+            
+            // Forgot password link
+            document.querySelector('.forgot-password').addEventListener('click', function(e) {
+                e.preventDefault();
+                showSuccess('Password reset instructions sent to your email (demo)');
+            });
+            
+            // Sign up link
+            document.querySelector('.signup-link a').addEventListener('click', function(e) {
+                e.preventDefault();
+                showSuccess('Redirecting to registration page (demo)');
+            });
+            
+            // Helper functions
+            function showError(message) {
+                errorMessage.textContent = message;
+                errorMessage.style.display = 'block';
+            }
+            
+            function showSuccess(message) {
+                successMessage.textContent = message;
+                successMessage.style.display = 'block';
+            }
+            
+            // Demo credentials autofill for testing
+            document.getElementById('username').addEventListener('focus', function() {
+                if (this.value === '') {
+                    this.value = 'admin';
+                    document.getElementById('password').value = 'password';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
