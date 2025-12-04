@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Kubernetes Node.js App</title>
+    <title>Login - AI Trip Advisor Portal</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -320,16 +320,16 @@
             .container {
                 flex-direction: column;
             }
-            
+
             .welcome-section {
                 order: -1;
                 padding: 30px 20px;
             }
-            
+
             .login-form-section {
                 padding: 40px 30px;
             }
-            
+
             .kubernetes-logo {
                 font-size: 50px;
             }
@@ -361,17 +361,17 @@
         <div class="login-form-section">
             <div class="logo">
                 <div class="logo-icon">
-                    <i class="fas fa-lock"></i>
+                    <i class="fas fa-route"></i>
                 </div>
-                <div class="logo-text">K8S Auth</div>
+                <div class="logo-text">AI Trip Advisor</div>
             </div>
-            
-            <h1>Welcome Back</h1>
-            <p class="subtitle">Sign in to your account to continue</p>
-            
+
+            <h1>Welcome Traveler</h1>
+            <p class="subtitle">Sign in to access your personalized AI-powered trip planner</p>
+
             <div id="errorMessage" class="error-message"></div>
             <div id="successMessage" class="success-message"></div>
-            
+
             <form id="loginForm">
                 <div class="form-group">
                     <label for="username">Username or Email</label>
@@ -380,7 +380,7 @@
                         <input type="text" id="username" name="username" placeholder="Enter your username or email" required>
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="password">Password</label>
                     <div class="input-with-icon">
@@ -388,7 +388,7 @@
                         <input type="password" id="password" name="password" placeholder="Enter your password" required>
                     </div>
                 </div>
-                
+
                 <div class="options">
                     <div class="remember-me">
                         <input type="checkbox" id="remember" name="remember">
@@ -396,16 +396,16 @@
                     </div>
                     <a href="#" class="forgot-password">Forgot password?</a>
                 </div>
-                
+
                 <button type="submit" class="login-button" id="loginButton">
                     <span id="buttonText">Sign In</span>
                 </button>
             </form>
-            
+
             <div class="divider">
                 <span>Or continue with</span>
             </div>
-            
+
             <div class="social-login">
                 <div class="social-btn google">
                     <i class="fab fa-google"></i>
@@ -417,34 +417,35 @@
                     <i class="fab fa-microsoft"></i>
                 </div>
             </div>
-            
+
             <div class="signup-link">
-                Don't have an account? <a href="#">Sign up here</a>
+                Don't have an account? <a href="#">Create one now</a>
             </div>
-            
+
             <div class="pod-info">
                 <h3>Kubernetes Pod Information</h3>
-                <p>Running on Node.js inside a Kubernetes pod</p>
+                <p>Hosted on a cloud-native microservices platform</p>
                 <p>Hostname: <span id="hostname">Loading...</span></p>
                 <p>Environment: <span id="environment">Production</span></p>
             </div>
         </div>
-        
+
         <div class="welcome-section">
             <div class="kubernetes-logo">
-                <i class="fab fa-docker"></i>
+                <i class="fas fa-globe-americas"></i>
             </div>
-            <h2>Kubernetes Node.js App</h2>
-            <p>This login page is served from a Node.js application running inside a Kubernetes pod. The frontend communicates with a backend API to authenticate users.</p>
-            
+            <h2>AI-Powered Trip Planning</h2>
+            <p>Plan smarter, travel better. Your intelligent itinerary generator uses real-time data, personalized
+                preferences, and Kubernetes-backed scalability to build perfect trips instantly.</p>
+
             <div class="features">
-                <h3>Features:</h3>
+                <h3>Platform Highlights:</h3>
                 <ul>
-                    <li><i class="fas fa-check-circle"></i> Secure authentication</li>
-                    <li><i class="fas fa-check-circle"></i> Kubernetes pod deployment</li>
-                    <li><i class="fas fa-check-circle"></i> Scalable architecture</li>
-                    <li><i class="fas fa-check-circle"></i> Containerized application</li>
-                    <li><i class="fas fa-check-circle"></i> Health monitoring</li>
+                    <li><i class="fas fa-check-circle"></i> AI-generated personalized itineraries</li>
+                    <li><i class="fas fa-check-circle"></i> Microservices running on Kubernetes</li>
+                    <li><i class="fas fa-check-circle"></i> Multi-container pod architecture</li>
+                    <li><i class="fas fa-check-circle"></i> Scalable, fault-tolerant backend</li>
+                    <li><i class="fas fa-check-circle"></i> Real-time processing & recommendations</li>
                 </ul>
             </div>
         </div>
@@ -458,51 +459,36 @@
             const errorMessage = document.getElementById('errorMessage');
             const successMessage = document.getElementById('successMessage');
             const hostnameElement = document.getElementById('hostname');
-            
-            // Set hostname (simulating Kubernetes pod hostname)
+
             hostnameElement.textContent = window.location.hostname || 'k8s-pod-' + Math.floor(Math.random() * 1000);
-            
-            // Form submission handler
+
             loginForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
-                
+
                 const username = document.getElementById('username').value;
                 const password = document.getElementById('password').value;
-                
-                // Clear previous messages
+
                 errorMessage.style.display = 'none';
                 successMessage.style.display = 'none';
-                
-                // Validate inputs
+
                 if (!username || !password) {
                     showError('Please fill in all fields');
                     return;
                 }
-                
-                // Disable button and show loading
+
                 loginButton.disabled = true;
                 buttonText.innerHTML = '<div class="loading"></div> Authenticating...';
-                
-                // Simulate API call to Node.js backend
+
                 try {
-                    // In a real implementation, this would be a fetch to your Node.js backend
-                    // Example: const response = await fetch('/api/login', { method: 'POST', body: JSON.stringify({username, password}) });
-                    
-                    // Simulate API delay
                     await new Promise(resolve => setTimeout(resolve, 1500));
-                    
-                    // Mock authentication logic
+
                     if (username === 'admin' && password === 'password') {
-                        // Successful login
-                        showSuccess('Login successful! Redirecting to dashboard...');
-                        
-                        // Simulate redirect after successful login
+                        showSuccess('Login successful! Redirecting...');
                         setTimeout(() => {
                             window.location.href = '/dashboard';
                         }, 1000);
                     } else {
-                        // Failed login
-                        showError('Invalid credentials. Try "admin" / "password"');
+                        showError('Invalid credentials.');
                         loginButton.disabled = false;
                         buttonText.textContent = 'Sign In';
                     }
@@ -512,8 +498,7 @@
                     buttonText.textContent = 'Sign In';
                 }
             });
-            
-            // Social login buttons
+
             document.querySelectorAll('.social-btn').forEach(button => {
                 button.addEventListener('click', function() {
                     const provider = this.classList.contains('google') ? 'Google' : 
@@ -521,37 +506,16 @@
                     showSuccess(`Redirecting to ${provider} authentication...`);
                 });
             });
-            
-            // Forgot password link
-            document.querySelector('.forgot-password').addEventListener('click', function(e) {
-                e.preventDefault();
-                showSuccess('Password reset instructions sent to your email (demo)');
-            });
-            
-            // Sign up link
-            document.querySelector('.signup-link a').addEventListener('click', function(e) {
-                e.preventDefault();
-                showSuccess('Redirecting to registration page (demo)');
-            });
-            
-            // Helper functions
+
             function showError(message) {
                 errorMessage.textContent = message;
                 errorMessage.style.display = 'block';
             }
-            
+
             function showSuccess(message) {
                 successMessage.textContent = message;
                 successMessage.style.display = 'block';
             }
-            
-            // Demo credentials autofill for testing
-            document.getElementById('username').addEventListener('focus', function() {
-                if (this.value === '') {
-                    this.value = 'admin';
-                    document.getElementById('password').value = 'password';
-                }
-            });
         });
     </script>
 </body>
