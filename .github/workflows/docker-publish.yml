@@ -2,10 +2,10 @@ name: Build and Publish Docker Image
 
 on:
   push:
-    branches: [ "main" ]        # change if your default branch is different
+    branches: [ "Will" ]        # change if your default branch is different
     tags: [ "v*" ]              # pushes version tags like v1.2.3
   pull_request:
-    branches: [ "main" ]
+    branches: [ "Will" ]
 
 permissions:
   contents: read
